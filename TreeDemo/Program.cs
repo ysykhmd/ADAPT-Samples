@@ -310,11 +310,16 @@ namespace TreeDemo
         //      A Catalog.adm file that contains the zipped JSON serialization of the ApplicationDataModel.Catalog object.
 
         // We've added logic here to zip that "adm" subdirectory into a single file, in case you want to email it to someone.
-            string zipPath = outputPath + @"\tree.zip";
+            string zipPath = applicationPath + @"\Zip";
+            if (Directory.Exists(zipPath))
+                Directory.Delete(zipPath, true);
+            if (!Directory.Exists(zipPath))
+                Directory.CreateDirectory(zipPath);
         // Delete the file if it already exists
-            if (File.Exists(zipPath))
-                File.Delete(zipPath);
-            ZipFile.CreateFromDirectory(@"C:\Temp\ADAPT\Output", zipPath);
+            string zipFile = zipPath + @"\tree.zip";
+            if (File.Exists(zipFile))
+                File.Delete(zipFile);
+            ZipFile.CreateFromDirectory(outputPath, zipFile);
         
         // This is logic to import the same data from the "adm" subdirectory we just created so you can compare it
         // in the debugger if you want.
